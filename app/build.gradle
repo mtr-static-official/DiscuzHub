@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.kidozh.discuzhub"
+        applicationId "com.dccgroup.forum"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 38
