@@ -32,8 +32,8 @@ android {
         single {
             // fill your bbs id
             manifestPlaceholders = [
-                    discuz_title: "论坛名称（如：西北工业大学三行四方）",
-                    discuz_base_url: "服务网址（如：https://bbs.example.com）",
+                    discuz_title: "DDLC.ICU论坛",
+                    discuz_base_url: "https://p.ddlc.love",
             ]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             applicationIdSuffix ".bbs"
