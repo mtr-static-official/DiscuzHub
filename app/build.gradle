@@ -33,7 +33,7 @@ android {
             // fill your bbs id
             manifestPlaceholders = [
                     discuz_title: "DDLCICU论坛",
-                    discuz_base_url: "https://forum.ddlc.wiki/",
+                    discuz_base_url: "https://ddlc.icu/",
             ]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             applicationIdSuffix ".bbs"
