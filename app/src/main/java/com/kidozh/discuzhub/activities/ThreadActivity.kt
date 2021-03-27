@@ -210,7 +210,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
             var authorid = 0
             val threadResult = threadDetailViewModel.threadPostResultMutableLiveData.value
             val viewThreadQueryStatus : ViewThreadQueryStatus = threadDetailViewModel.threadStatusMutableLiveData.value as ViewThreadQueryStatus
-            if (threadResult?.threadPostVariables != null && threadResult.threadPostVariables.detailedThreadInfo != null) {
+            if (threadResult?.threadPostVariables != null) {
                 authorid = threadResult.threadPostVariables.detailedThreadInfo.authorId
             }
             // update list
@@ -248,9 +248,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                 Toasty.error(application,
                         getString(R.string.discuz_api_message_template, errorMessage.key, errorMessage.content),
                         Toast.LENGTH_LONG).show()
-                networkIndicatorAdapter.setErrorStatus(ErrorMessage(
-                        errorMessage.key, errorMessage.content, R.drawable.ic_error_outline_24px
-                ))
+                networkIndicatorAdapter.setErrorStatus(errorMessage)
                 VibrateUtils.vibrateForError(application)
             }
         })
@@ -269,13 +267,15 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         threadDetailViewModel.formHash.observe(this, { s -> formHash = s })
         threadDetailViewModel.threadStatusMutableLiveData.observe(this, { viewThreadQueryStatus ->
             Log.d(TAG, "Livedata changed " + viewThreadQueryStatus.datelineAscend)
-            if (supportActionBar != null) {
-                if (viewThreadQueryStatus.datelineAscend) {
-                    supportActionBar!!.setSubtitle(getString(R.string.bbs_thread_status_ascend))
-                } else {
-                    supportActionBar!!.setSubtitle(getString(R.string.bbs_thread_status_descend))
-                }
-            }
+//            if (supportActionBar != null) {
+//                if (viewThreadQueryStatus.datelineAscend) {
+//                    binding.toolbarSubtitle.setText(getString(R.string.bbs_thread_status_ascend))
+//
+//                } else {
+//                    binding.toolbarSubtitle.setText(getString(R.string.bbs_thread_status_descend))
+//
+//                }
+//            }
         })
         threadDetailViewModel.detailedThreadInfoMutableLiveData.observe(this, { detailedThreadInfo -> // closed situation
             // prepare notification list
@@ -461,9 +461,10 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                     val sp = Html.fromHtml(threadResult.threadPostVariables.detailedThreadInfo.subject,HtmlCompat.FROM_HTML_MODE_COMPACT)
                     val spannableString = SpannableString(sp)
                     binding.bbsThreadSubject.setText(spannableString, TextView.BufferType.SPANNABLE)
-                    if (supportActionBar != null) {
-                        supportActionBar!!.setTitle(threadResult.threadPostVariables.detailedThreadInfo.subject)
-                    }
+//                    if (supportActionBar != null) {
+//                        supportActionBar!!.setTitle(threadResult.threadPostVariables.detailedThreadInfo.subject)
+//                    }
+                    // binding.toolbarTitle.text = threadResult.threadPostVariables.detailedThreadInfo.subject
                     // check with comments
 
                     postAdapter.mergeCommentMap(threadResult.threadPostVariables.commentList)
@@ -1431,7 +1432,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
     private fun configureToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowTitleEnabled(true)
+        binding.toolbarSubtitle.text = thread?.tid.toString()
 
         //getSupportActionBar().setTitle(subject);
     }

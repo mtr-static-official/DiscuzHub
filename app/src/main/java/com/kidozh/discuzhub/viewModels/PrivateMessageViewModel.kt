@@ -67,7 +67,7 @@ class PrivateMessageViewModel(application: Application) : AndroidViewModel(appli
                     if (totalPrivateMessages != null) {
                         mergedPrivateMessageListLiveData.addAll(totalPrivateMessages)
                     }
-                    mergedPrivateMessageListLiveData.addAll(privateMessageResult.variables.pmList)
+                    mergedPrivateMessageListLiveData.addAll(privateMessageResult.variables.pmList.reversed())
 
                     totalPrivateMessageListMutableLiveData.postValue(mergedPrivateMessageListLiveData)
 
@@ -99,7 +99,7 @@ class PrivateMessageViewModel(application: Application) : AndroidViewModel(appli
         })
     }
 
-    fun sendPrivateMessage(plid: Int, pmId: Int, message: String){
+    fun sendPrivateMessage(plid: Int, pmId: Int, message: String, toUid: Int){
         if(sendNetworkState.value == ConstUtils.NETWORK_STATUS_LOADED_ALL || sendNetworkState.value == ConstUtils.NETWORK_STATUS_LOADING){
             return
         }
@@ -107,8 +107,8 @@ class PrivateMessageViewModel(application: Application) : AndroidViewModel(appli
         if(formHashMutableLiveData.value!=null){
             sendNetworkState.postValue(ConstUtils.NETWORK_STATUS_LOADING)
             val formHash = formHashMutableLiveData.value as String
-            val call = service.sendPrivateMessage(plid,pmId,formHash,message)
-            Log.d(TAG,"Call request "+call.request().url())
+            val call = service.sendPrivateMessage(plid,pmId,formHash,message, toUid.toString())
+            Log.d(TAG,"Call request "+call.request().url()+" To uid "+toUid)
             call.enqueue(object : Callback<ApiMessageActionResult>{
                 override fun onResponse(call: Call<ApiMessageActionResult>, response: Response<ApiMessageActionResult>) {
                     if(response.isSuccessful && response.body() != null){
