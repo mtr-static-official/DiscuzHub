@@ -10,7 +10,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 39
-        versionName "4.9"
+        versionName "4.9.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 discuz_title: "NOT_IMPLEMENTED",
@@ -33,7 +33,7 @@ android {
             // fill your bbs id
             manifestPlaceholders = [
                     discuz_title: "DDLCICU论坛",
-                    discuz_base_url: "https://ddlc.icu/",
+                    discuz_base_url: "https://discuss.ddlc.top/",
             ]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             applicationIdSuffix ".bbs"
